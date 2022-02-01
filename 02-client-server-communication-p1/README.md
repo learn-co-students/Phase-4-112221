@@ -8,7 +8,7 @@
 - [] Build out create actions that trigger validations and respond with the appropriate status code
 
 ### Domain
-![domain_2](assets/domain.png)
+![domain_2](assets/domain_2.png)
 
 ### Create Action and strong params
 >Note: To review why we use strong params review the `Strong Params and Mass Assignment` on canvas.
