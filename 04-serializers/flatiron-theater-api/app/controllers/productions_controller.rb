@@ -5,7 +5,7 @@ class ProductionsController < ApplicationController
 
     def show
         production = Production.find(params[:id])
-        render json: production, include: :production_roles
+        render json: production
     end 
 
     #Review: Create action 
