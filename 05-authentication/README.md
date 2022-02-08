@@ -48,7 +48,7 @@ rails c
 cow = BCrypt::Password.create('cow')
  => "$2a$12$aEyytH1qbti/pARIe3wE6e34ayWDLLEdQ8bwAlRYUYsPfSQF/BXLS" 
 
-# The even if BCrypt is given the same password, the hash is different.
+# Even if BCrypt is given the same password the hash produced is different.
 # This hash can be saved in the DB as a string and referenced later. 
 
 cow = BCrypt::Password.create('cow')
@@ -62,19 +62,19 @@ cow.checksum
  => "$2a$12$khRZRj8RYrZ52O7Yugw1z." 
 
  # authenticate 
- # If the BCrypt Engin is given the correct password with the correct salt it will generate a hashed password instance. == when compared with an instance of a Bcrypt hashed password does something different.
-# With this method we can see if the same password with the same salt produces the same string. 
+ # If the BCrypt Engin is given the correct password with the correct salt it will generate a hashed password instance. `==` does something different when used on a BCrypt password instance.
+# It takes a string and hashes it with the salt from the BCrypt instance. 
 # BCyrpt docs 
 # 
 #  def ==(secret)
 #     super(BCrypt::Engine.hash_secret(secret, @salt))
 #  end
 
-#Hashes the users input with salt saved in db.
-cow2 BCrypt::Engine::hash_secret('cow', cow.salt)
+#If we use BCrypt to hash a users password from login with the salt from our database we can produce a BCrypt password instance.
+cow2 = BCrypt::Engine::hash_secret('cow', cow.salt)
 
-# checks above instance against password_digest in DB
-# == hashes the password_digest and compares it with the instance we just created. 
+# We can then use `==` to verify that the above instance matches with what we have in our database.
+
 cow2 == "$2a$12$YoAo8BwjPhrQIF8X..nQGeLFAI3jzltfe.rGzIeERJGswxD65ZjKi"
 
 ```
