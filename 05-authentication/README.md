@@ -5,37 +5,6 @@
 - [ ] Explain Hashing and Salting
 - [ ] Implement Bcrypt
 - [ ] Build a sign-up and login route
-- [ ] configure the rails app to use cookies and sessions
-
-### Cookies and Sessions 
-Authorization makes uses of cookies and sessions. This will be covered in more detail tomorrow but the application will need to be configured to use them.
-
-### Configure rails to use cookies and sessions
-
-```
-# config/application.rb 
-
-module FlatironTheaterApi
-  class Application < Rails::Application
-    config.load_defaults 6.1
-    config.api_only = true
-
-
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
-
-    config.action_dispatch.cookies_same_site_protection = :strict
-  end
-end
-
-# app/controllers/application_controller.rb
-
-class ApplicationController < ActionController::API
-  include ActionController::Cookies
-end
-
-
-```
 
 
 ### BCrypt 

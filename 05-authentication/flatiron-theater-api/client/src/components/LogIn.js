@@ -9,7 +9,7 @@ function Login() {
     function onSubmit(e){
         e.preventDefault()
         const user = {
-            user_name: username,
+            username: username,
             password
         }
        

@@ -22,6 +22,7 @@ function Auth() {
         })
         .then(res => res.json())
         .then(json => {
+            console.log(json)
             if(json.errors) setErrors(Object.entries(json.errors))
         })
     }
