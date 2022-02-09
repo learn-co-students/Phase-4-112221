@@ -86,14 +86,14 @@ const App = () => {
     fetch("/authorized_user").then((res) => {
       if (res.ok) {
         res.json().then((user) => {
-          setCurrentUser(user);
+          setIsAuthenticated(true);
           setUser(true);
         });
       }
     });
   }, []);
 
-   if (!user) return <Login setUser={setUser} setErrors={setErrors} />;
+   if (!setIsAuthenticated) return <Login error={'please login'} />;
 
   return (
     <div className="app">
