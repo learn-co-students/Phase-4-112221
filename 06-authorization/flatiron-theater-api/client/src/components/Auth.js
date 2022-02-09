@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-function Auth() {
+function Auth({setUser, setIsAuthenticated}) {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -20,14 +20,23 @@ function Auth() {
           headers:{'Content-Type': 'application/json'},
           body:JSON.stringify(user)
         })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            if(json.errors) setErrors(Object.entries(json.errors))
+        .then(res => {
+          if(res.ok){
+            res.json()
+            .then(user=>{
+              setUser(user)
+              setIsAuthenticated(true)
+            })
+            
+          } else {
+            res.json()
+            .then(json => setErrors(json.errors))
+          }
         })
     }
     return (
         <> 
+        <h1>Sign UP</h1>
         <form onSubmit={onSubmit}>
         <label>
           Username

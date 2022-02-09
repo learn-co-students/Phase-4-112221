@@ -13,11 +13,26 @@ function App() {
   const [errors, setErrors] = useState(false)
   const [cart, setCart] = useState([])
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
+    fetch("/authorized_user")
+    .then((res) => {
+      if (res.ok) {
+        res.json()
+        .then((user) => {
+          setIsAuthenticated(true);
+          setUser(user);
+        });
+      }
+    });
+
     fetch('/productions')
     .then(res => res.json())
-    .then(setProductions)
-  },[])
+    .then(setProductions);
+
+  },[]);
 
   function handlePost(obj){
       fetch('/productions',{
@@ -27,7 +42,6 @@ function App() {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         if(data.errors){
           setErrors(data.errors)
         } else {
@@ -36,9 +50,11 @@ function App() {
       })
   }
 
+  if (!isAuthenticated) return <Login error={'please login'} setIsAuthenticated={setIsAuthenticated} setUser={setUser} />;
+
   return (
     <>
-    <Navigation cart={cart}/>
+    <Navigation cart={cart} setIsAuthenticated={setIsAuthenticated} setUser={setUser} user={user}/>
     <Switch>
     <Route exact path="/">
       <ProductionContainer productions={productions}/>

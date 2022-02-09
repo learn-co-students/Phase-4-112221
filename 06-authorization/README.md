@@ -61,7 +61,7 @@ We will need to make a route and action that verifies that a user is logged.
 ```
 # app/controllers/application_controller.rb
     def current_user
-        User.find_by(id: session[:user_id])
+        User.find_by(id: session[:current_user])
     end
 
 #config/routes.rb
@@ -77,23 +77,26 @@ def show
 end
 
 # Client
-#client/src/components/App.js
+#client/src/components/#client/src/components/App.js
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("/authorized_user").then((res) => {
+    fetch("/authorized_user")
+    .then((res) => {
       if (res.ok) {
-        res.json().then((user) => {
-          setIsAuthenticated(true);
-          setUser(user);
+        res.json()
+        .then((user) => {
+          setIsAuthenticated(user);
+          setUser(true);
         });
       }
     });
   }, []);
 
-   if (!setIsAuthenticated) return <Login error={'please login'} />;
+    if (!user) return <Login error={'please login'} />;
+
 
   return (
     <div className="app">
@@ -103,6 +106,4 @@ const App = () => {
 };
 
 export default App;
-
-
 ```
