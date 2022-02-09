@@ -107,3 +107,22 @@ const App = () => {
 
 export default App;
 ```
+
+This will only Authenticate a user for one route and one action. If we want to authenticate a user for multiple actions we will need to add a auth action in the action controller that runs before every action.
+>Note: We can skip a before action with skip_before_action
+
+
+```
+#app/controllers/application_controller.rb
+  before_action :authorize_user
+
+   def current_user
+        User.find_by(id: session[:current_user])
+    end
+
+    def authorize_user
+        return render json: { error: "Not authorized" }, status: :unauthorized unless current_user
+    end
+
+
+```
