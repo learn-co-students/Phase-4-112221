@@ -80,27 +80,24 @@ end
 #client/src/components/App.js
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("/me")
-    .then((response) => {
-      if (response.ok) {
-        response.json()
-        .then((user) => {
-          setUser(user)
-          setIsAuthenticated(true)
-          });
-      } 
+    fetch("/authorized_user").then((res) => {
+      if (res.ok) {
+        res.json().then((user) => {
+          setCurrentUser(user);
+          setUser(true);
+        });
+      }
     });
+  }, []);
 
-  },[])
-
-  if (!user) return <Login error={"please login"} />;
+   if (!user) return <Login setUser={setUser} setErrors={setErrors} />;
 
   return (
     <div className="app">
-      ... {router code here}
+      {... router code here}
     </div>
   );
 };
