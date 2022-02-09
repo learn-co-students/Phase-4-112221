@@ -87,7 +87,7 @@ const App = () => {
       if (res.ok) {
         res.json().then((user) => {
           setIsAuthenticated(true);
-          setUser(true);
+          setUser(user);
         });
       }
     });
