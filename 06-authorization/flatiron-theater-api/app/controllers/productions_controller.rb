@@ -1,4 +1,6 @@
 class ProductionsController < ApplicationController
+    before_action :authorize_user, only: [:create]
+
     def index 
         render json: Production.all
     end 
@@ -8,7 +10,14 @@ class ProductionsController < ApplicationController
         render json: production
     end 
 
-    #Review: Create action 
+    def create
+        production = Production.create!(production_params)
+        byebug
+        render json: production, status: :created
+    rescue  ActiveRecord::RecordInvalid => invalid
+        render json: { errors: invalid.record.errors }, status: :unprocessable_entity
+     
+    end 
     
     def destroy
         production = Production.find(params[:id])
@@ -16,5 +25,7 @@ class ProductionsController < ApplicationController
         head :no_content
     end 
 
-    #Review: Strong Params 
+    def production_params
+        params.permit(:title, :genre,:description, :budget, :image, :director, :ongoing)
+    end 
 end
