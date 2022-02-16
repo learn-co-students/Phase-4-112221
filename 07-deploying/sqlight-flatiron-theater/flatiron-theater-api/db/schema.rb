@@ -12,10 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2022_02_08_171221) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "production_roles", force: :cascade do |t|
     t.string "role"
     t.boolean "understudy"
-    t.integer "production_id", null: false
+    t.bigint "production_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["production_id"], name: "index_production_roles_on_production_id"
@@ -35,8 +38,8 @@ ActiveRecord::Schema.define(version: 2022_02_08_171221) do
 
   create_table "tickets", force: :cascade do |t|
     t.float "price"
-    t.integer "user_id", null: false
-    t.integer "production_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "production_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["production_id"], name: "index_tickets_on_production_id"

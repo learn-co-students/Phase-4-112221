@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#logout'
   get '/authorized_user', to: "users#show"
 
+  get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 #  get '/production', to: 'production#index'
 end
